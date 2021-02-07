@@ -1,7 +1,12 @@
 /* GLOBAL */
 
 :root {
+    --bg-color: #f0f2f5;
     --dark-blue: #363f5f;
+    --light-blue: #969cb3;
+    --green: #49aa26;
+    --light-green: #3dd705;
+    --red: #e92929;
 }
 
 * {
@@ -10,8 +15,12 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 93.75%;
+}
+
 body {
-    background-color: #f0f2f5;
+    background-color: var(--bg-color);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -28,12 +37,80 @@ h2 {
     font-weight: normal;
 }
 
+a {
+    font-weight: 700;
+    color: var(--green);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+a:hover {
+    color: var(--light-green)
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    color: white;
+    background: var(--green);
+    border-radius: 0.35rem;
+    padding: 0;
+    cursor: pointer;
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: var(--light-green)
+}
+
+.button.new {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
+
+.button.cancel {
+    color: var(--red);
+    border: 2px solid var(--red);
+    border-radius: 0.35rem;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    opacity: 0.6;
+    transition: 0.2s;
+}
+
+.button.cancel:hover {
+    opacity: 1;
+    background: var(--red);
+    color: white;
+}
+
 
 /* HEADER */
 
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
 #logo {
-    color: #fff;
-    font-weight: 100;
+    margin: 12px 0 26px;
 }
 
 .container {
@@ -46,7 +123,7 @@ h2 {
 }
 
 #balance h2 {
-    color: #fff;
+    color: white;
     margin-top: 0;
 }
 
@@ -54,7 +131,7 @@ h2 {
 /* CARDS */
 
 .card {
-    background: #fff;
+    background: white;
     padding: 1.5rem 2rem;
     border-radius: 0.35rem;
     margin-bottom: 2rem;
@@ -63,6 +140,9 @@ h2 {
 .card h3 {
     font-weight: normal;
     font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .card p {
@@ -73,17 +153,23 @@ h2 {
 }
 
 .card.total {
-    background: #49aa26;
+    background: var(--green);
     color: white;
 }
 
 
 /* Tabelas */
 
+.transactionTable {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+
 #dataTable {
     width: 100%;
     border-spacing: 0 0.5rem;
-    color: #969cb3;
+    color: var(--light-blue);
 }
 
 table th {
@@ -116,12 +202,96 @@ td.income {
 }
 
 td.expense {
-    color: #e92929;
+    color: var(--red);
+}
+
+td.dell {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+td.dell img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 table thead tr th:first-child,
 table tbody tr td:first-child {
     border-radius: 0.35rem 0 0 0.35rem;
+}
+
+table thead tr th:last-child,
+table tbody tr td:last-child {
+    border-radius: 0 0.35rem 0.35rem 0;
+}
+
+
+/* MODAL */
+
+.modalOverlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 999;
+}
+
+.modalOverlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: var(--bg-color);
+    padding: 2.4rem;
+    position: relative;
+    border-radius: 0.5rem;
+    z-index: 1;
+}
+
+
+/* FORMS */
+
+#form {
+    max-width: 500px;
+}
+
+#form h2 {
+    margin-top: 0;
+}
+
+#form input {
+    border: none;
+    border-radius: 0.2rem;
+    padding: 0.8rem;
+    width: 100%;
+}
+
+.inputGroup {
+    margin-top: 0.8rem;
+}
+
+.inputGroup small {
+    opacity: 0.4;
+}
+
+.inputGroup.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inputGroup.actions .button,
+.inputGroup.actions button {
+    width: 48%;
 }
 
 
@@ -132,4 +302,18 @@ footer {
     padding: 4rem 0 2rem;
     color: var(--dark-blue);
     opacity: 0.6;
+}
+
+
+/* RESPONSIVE */
+
+@media (min-width: 800px) {
+    html {
+        font-size: 87.5%;
+    }
+    #balance {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 2rem;
+    }
 }
