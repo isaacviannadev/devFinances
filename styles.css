@@ -1,3 +1,5 @@
+/* GLOBAL */
+
 :root {
     --dark-blue: #363f5f;
 }
@@ -26,6 +28,9 @@ h2 {
     font-weight: normal;
 }
 
+
+/* HEADER */
+
 #logo {
     color: #fff;
     font-weight: 100;
@@ -44,6 +49,9 @@ h2 {
     color: #fff;
     margin-top: 0;
 }
+
+
+/* CARDS */
 
 .card {
     background: #fff;
@@ -68,6 +76,9 @@ h2 {
     background: #49aa26;
     color: white;
 }
+
+
+/* Tabelas */
 
 #dataTable {
     width: 100%;
@@ -95,7 +106,7 @@ table tbody tr:hover {
     opacity: 1;
 }
 
-td.descripton {
+td.description {
     color: var(--dark-blue);
     font-weight: 500;
 }
@@ -112,6 +123,9 @@ table thead tr th:first-child,
 table tbody tr td:first-child {
     border-radius: 0.35rem 0 0 0.35rem;
 }
+
+
+/* FOOTER */
 
 footer {
     text-align: center;
