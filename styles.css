@@ -279,6 +279,10 @@ table tbody tr td:last-child {
     margin-top: 0.8rem;
 }
 
+.inputGroup ::placeholder {
+    color: var(--light-blue);
+}
+
 .inputGroup small {
     opacity: 0.4;
 }
