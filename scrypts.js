@@ -12,10 +12,14 @@ const Modal = {
         document.querySelector(".modalOverlayRemove").classList.remove("active");
     },
     open3() {
-        document.querySelector(".modalOverlayRemoveConfirm").classList.add("active");
+        document
+            .querySelector(".modalOverlayRemoveConfirm")
+            .classList.add("active");
     },
     close3() {
-        document.querySelector(".modalOverlayRemoveConfirm").classList.remove("active");
+        document
+            .querySelector(".modalOverlayRemoveConfirm")
+            .classList.remove("active");
     },
 };
 
@@ -139,6 +143,45 @@ const Utils = {
         });
 
         return signal + value;
+    },
+};
+
+const Form = {
+    description: document.querySelector("input#description"),
+    description: document.querySelector("input#amount"),
+    description: document.querySelector("input#date"),
+
+    getValues() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value,
+        };
+    },
+
+    validadeField() {
+        const { description, amount, date } = Form.getValues();
+
+        if (
+            description.trim() === "" ||
+            amount.trim() === "" ||
+            date.trim() === ""
+        ) {
+            throw new Error("Por favor, preencha todos os campos")
+        }
+    },
+
+    submit(event) {
+        event.preventDefault();
+
+        try {
+            Form.validadeField()
+
+        } catch (error) {
+            alert(error.message)
+        }
+
+
     },
 };
 

@@ -79,7 +79,7 @@
         <div class="modal">
             <div id="form">
                 <h2>Nova Transação</h2>
-                <form action="">
+                <form action="" onsubmit="Form.submit(event)">
                     <div class="inputGroup">
                         <label for="description" class="srOnly">Descrição</label>
                         <input type="text" name="description" id="description" placeholder="Descrição" />
@@ -112,7 +112,7 @@
 
                 <div class="inputGroupRemove actions">
                     <a href="#" onclick="Modal.close2()" class="button cancel">Cancelar</a>
-                    <button onclick="Modal.open3(Transaction.remove(0))">Salvar</button>
+                    <button onclick="Modal.open3(Transaction.remove(0))">Remover</button>
                 </div>
 
             </div>
