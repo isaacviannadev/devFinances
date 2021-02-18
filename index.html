@@ -29,7 +29,7 @@
                     <span>Entradas</span>
                     <img src="./assets/income.svg" alt="Income">
                 </h3>
-                <p>R$5.000,00</p>
+                <p id="incomeDisplay">R$5.000,00</p>
             </div>
 
             <div class="card">
@@ -37,7 +37,7 @@
                     <span>Saídas</span>
                     <img src="./assets/expense.svg" alt="Expense">
                 </h3>
-                <p>R$2.000,00</p>
+                <p id="expenseDisplay">R$2.000,00</p>
             </div>
 
             <div class="card total">
@@ -45,7 +45,7 @@
                     <span>Total</span>
                     <img src="./assets/total.svg" alt="Total">
                 </h3>
-                <p class="total-value">R$3.000,00</p>
+                <p id="totalDisplay">R$3.000,00</p>
             </div>
 
         </section>
@@ -99,6 +99,35 @@
                     </div>
 
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalOverlayRemove">
+        <div class="modalRemove">
+            <div id="formRemove">
+                <img src="./assets/trash-2.svg" alt="Expense">
+                <h2>Remover</h2>
+                <span>Tem certeza que deseja excluir a transação?</span>
+
+                <div class="inputGroupRemove actions">
+                    <a href="#" onclick="Modal.close2()" class="button cancel">Cancelar</a>
+                    <button onclick="Modal.open3(Transaction.remove(0))">Salvar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modalOverlayRemoveConfirm">
+        <div class="modalRemoveConfirm">
+            <div id="formRemoveConfirm">
+                <img src="./assets/check.svg" alt="confirm">
+                <h2>Removido com sucesso!</h2>
+
+                <div class="inputGroupRemove actions check ">
+                    <button onclick="Modal.close3(Modal.close2())">Ok</button>
+                </div>
+
             </div>
         </div>
     </div>

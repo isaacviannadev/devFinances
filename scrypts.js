@@ -5,37 +5,77 @@ const Modal = {
     close() {
         document.querySelector(".modalOverlay").classList.remove("active");
     },
+    open2() {
+        document.querySelector(".modalOverlayRemove").classList.add("active");
+    },
+    close2() {
+        document.querySelector(".modalOverlayRemove").classList.remove("active");
+    },
+    open3() {
+        document.querySelector(".modalOverlayRemoveConfirm").classList.add("active");
+    },
+    close3() {
+        document.querySelector(".modalOverlayRemoveConfirm").classList.remove("active");
+    },
 };
 
 const transactions = [{
-        id: 1,
         description: "Luz",
-        amount: -50000,
+        amount: -50500,
         date: "23/01/2021",
     },
     {
-        id: 2,
         description: "Website",
         amount: 500000,
         date: "23/01/2021",
     },
     {
-        id: 1,
         description: "Internet",
         amount: -200000,
         date: "23/01/2021",
     },
 ];
 
-const transaction = {
+const Transaction = {
+    all: transactions,
+    add(transaction) {
+        Transaction.all.push(transaction);
+
+        App.reload();
+    },
+
+    remove(index) {
+        Transaction.all.splice(index, 1);
+
+        App.reload();
+    },
+
     incomes() {
-        //somar todas as entradas
+        let income = 0;
+
+        Transaction.all.forEach((transaction) => {
+            if (transaction.amount >= 0) {
+                income += transaction.amount;
+            }
+        });
+
+        return income;
     },
     expenses() {
-        //somar todas as saídas
+        let expense = 0;
+
+        Transaction.all.forEach((transaction) => {
+            if (transaction.amount < 0) {
+                expense += transaction.amount;
+            }
+        });
+
+        return expense;
     },
     total() {
-        //diminuir total de saídas do total das entradas
+        let total = Transaction.incomes() + Transaction.expenses();
+
+        return total;
     },
 };
 
@@ -52,28 +92,68 @@ const DOM = {
     innerHTMLTransaction(transaction) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense";
 
-        // const amount = 
+        const amount = Utils.formatCurrency(transaction.amount);
 
         const html = `
         <td class="description">${transaction.description}</td>
-        <td class="${CSSclass}">${transaction.amount}</td>
+        <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td class="dell">
-            <img src="./assets/minus.svg" alt="Excluir Transação">
+            <img src="./assets/minus.svg" onclick="Modal.open2()" alt="Excluir Transação">
         </td>
     `;
 
         return html;
     },
+
+    updateBalance() {
+        document.getElementById("incomeDisplay").innerHTML = Utils.formatCurrency(
+            Transaction.incomes()
+        );
+
+        document.getElementById("expenseDisplay").innerHTML = Utils.formatCurrency(
+            Transaction.expenses()
+        );
+
+        document.getElementById("totalDisplay").innerHTML = Utils.formatCurrency(
+            Transaction.total()
+        );
+    },
+
+    clearTransactions() {
+        DOM.transactionsContainer.innerHTML = "";
+    },
 };
 
 const Utils = {
     formatCurrency(value) {
-        const signal = Number(value) < 0 ? "-" : ""
-    }
-}
+        const signal = Number(value) < 0 ? "-" : "";
 
+        value = String(value).replace(/\D/g, "");
 
-transactions.forEach((transaction) => {
-    DOM.addTransaction(transaction);
-});
+        value = Number(value) / 100;
+
+        value = value.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        });
+
+        return signal + value;
+    },
+};
+
+const App = {
+    init() {
+        Transaction.all.forEach((transaction) => {
+            DOM.addTransaction(transaction);
+        });
+
+        DOM.updateBalance();
+    },
+    reload() {
+        DOM.clearTransactions();
+        App.init();
+    },
+};
+
+App.init();
