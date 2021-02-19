@@ -1,17 +1,20 @@
 const Modal = {
+
     open() {
         document.querySelector(".modalOverlay").classList.add("active");
     },
     close() {
         document.querySelector(".modalOverlay").classList.remove("active");
     },
-    open2() {
+    open2(index) {
+        indexGlobal = index;
         document.querySelector(".modalOverlayRemove").classList.add("active");
     },
     close2() {
         document.querySelector(".modalOverlayRemove").classList.remove("active");
     },
     open3() {
+
         document
             .querySelector(".modalOverlayRemoveConfirm")
             .classList.add("active");
@@ -23,21 +26,19 @@ const Modal = {
     },
 };
 
-const transactions = [{
-        description: "Luz",
-        amount: -50500,
-        date: "23/01/2021",
+const Storage = {
+    get() {
+        return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
     },
-    {
-        description: "Website",
-        amount: 500000,
-        date: "23/01/2021",
+
+    set() {
+        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
     },
-    {
-        description: "Internet",
-        amount: -200000,
-        date: "23/01/2021",
-    },
+};
+
+
+const transactions = [
+    all: Storage.get()
 ];
 
 const Transaction = {
@@ -48,8 +49,8 @@ const Transaction = {
         App.reload();
     },
 
-    remove(index) {
-        Transaction.all.splice(index, 1);
+    remove() {
+        Transaction.all.splice(indexGlobal, 1);
 
         App.reload();
     },
@@ -79,6 +80,12 @@ const Transaction = {
     total() {
         let total = Transaction.incomes() + Transaction.expenses();
 
+        if (total < 0) {
+            document.querySelector(".card.total").classList.add("negative");
+        } else {
+            document.querySelector(".card.total").classList.remove("negative");
+        }
+
         return total;
     },
 };
@@ -88,22 +95,24 @@ const DOM = {
 
     addTransaction(transaction, index) {
         const tr = document.createElement("tr");
-        tr.innerHTML = DOM.innerHTMLTransaction(transaction);
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction, index);
+        tr.dataset.index = index;
 
         DOM.transactionsContainer.appendChild(tr);
     },
 
-    innerHTMLTransaction(transaction) {
+    innerHTMLTransaction(transaction, index) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense";
 
         const amount = Utils.formatCurrency(transaction.amount);
+        // const value = String(transaction.description);
 
         const html = `
         <td class="description">${transaction.description}</td>
         <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td class="dell">
-            <img src="./assets/minus.svg" onclick="Modal.open2()" alt="Excluir Transação">
+            <img src="./assets/minus.svg" onclick="Modal.open2(${index})" alt="Excluir Transação">
         </td>
     `;
 
@@ -189,9 +198,9 @@ const Form = {
 
         date = Utils.formatDate(date);
 
-        console.log(description)
-        console.log(amount)
-        console.log(date)
+        console.log(description);
+        console.log(amount);
+        console.log(date);
 
         return {
             description,
@@ -214,10 +223,7 @@ const Form = {
 
             const transaction = Form.formatValues();
 
-
-
             Transaction.add(transaction);
-
 
             Form.clearFields();
 
@@ -228,14 +234,14 @@ const Form = {
     },
 };
 
+
 const App = {
     init() {
-        Transaction.all.forEach((transaction) => {
-            DOM.addTransaction(transaction);
-        });
+        Transaction.all.forEach(DOM.addTransaction);
 
         DOM.updateBalance();
     },
+
     reload() {
         DOM.clearTransactions();
         App.init();
