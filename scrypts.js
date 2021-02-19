@@ -1,5 +1,5 @@
 const Modal = {
-
+    //modais de adição e exclusão de transações
     open() {
         document.querySelector(".modalOverlay").classList.add("active");
     },
