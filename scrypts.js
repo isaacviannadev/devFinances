@@ -32,17 +32,13 @@ const Storage = {
     },
 
     set() {
-        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+        localStorage.setItem("dev.finances:transactions", JSON.stringify(Transaction))
     },
 };
 
-
-const transactions = [
-    all: Storage.get()
-];
-
 const Transaction = {
-    all: transactions,
+
+    all: Storage.get(),
     add(transaction) {
         Transaction.all.push(transaction);
 
@@ -240,6 +236,8 @@ const App = {
         Transaction.all.forEach(DOM.addTransaction);
 
         DOM.updateBalance();
+
+        Storage.set(Transaction.all)
     },
 
     reload() {
