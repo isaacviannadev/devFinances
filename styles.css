@@ -1,8 +1,14 @@
 /* GLOBAL */
 
 :root {
+    /* --white: #000000; */
+    /* --bg-color: #333333; */
+    /* --dark-blue: #8738a9; */
+    /* --header-bg: #51226a; */
+    --white: #fff;
     --bg-color: #f0f2f5;
     --dark-blue: #363f5f;
+    --header-bg: #2d4a22;
     --light-blue: #969cb3;
     --green: #49aa26;
     --light-green: #3dd705;
@@ -26,7 +32,7 @@ body {
 }
 
 header {
-    background: #2d4a22;
+    background: var(--header-bg);
     padding: 2rem 0 10rem;
     text-align: center;
 }
@@ -124,7 +130,7 @@ button:hover {
 }
 
 #balance h2 {
-    color: white;
+    color: var(--white);
     margin-top: 0;
 }
 
@@ -132,7 +138,7 @@ button:hover {
 /* CARDS */
 
 .card {
-    background: white;
+    background: var(--white);
     padding: 1.5rem 2rem;
     border-radius: 0.35rem;
     margin-bottom: 2rem;
@@ -155,12 +161,12 @@ button:hover {
 
 .card.total {
     background: var(--green);
-    color: white;
+    color: var(--white);
 }
 
 .card.total.negative {
     background: var(--red);
-    color: white;
+    color: var(--white);
 }
 
 
@@ -179,19 +185,20 @@ button:hover {
 }
 
 table th {
-    background: white;
+    background: var(--white);
     font-weight: normal;
     padding: 1rem 2rem;
     text-align: left;
 }
 
 table td {
-    background: white;
+    background: var(--white);
     padding: 1rem 2rem;
 }
 
 table tbody tr {
     opacity: 0.6;
+    transition: 0.2s ease;
 }
 
 table tbody tr:hover {
@@ -204,7 +211,7 @@ td.description {
 }
 
 td.income {
-    color: #12a454;
+    color: var(--green);
 }
 
 td.expense {
@@ -213,7 +220,7 @@ td.expense {
 
 td.dell {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-self: center;
 }
 
